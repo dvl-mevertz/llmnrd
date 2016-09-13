@@ -124,9 +124,9 @@ static void llmnr_respond(unsigned int ifindex, const struct llmnr_hdr *hdr,
 	if ((query_len - name_len - 2) < (sizeof(qtype) + sizeof(qclass)))
 		return;
 
-	memcpy(&qtype, query_name_end, 2);
+	memcpy(&qtype, query_name_end, sizeof(qtype));
 	qtype = ntohs(qtype);
-	memcpy(&qclass, query_name_end + 2, 2);
+	memcpy(&qclass, query_name_end + sizeof(qtype), sizeof(qclass));
 	qclass = ntohs(qclass);
 
 	/* Only IN queries supported */
